@@ -1,7 +1,9 @@
 import { bindable, BindingMode, customAttribute, ICustomAttributeViewModel, INode } from '@aurelia/runtime-html';
 
 @customAttribute('outclick')
-export class AureliaOutclickCustomAttribute implements ICustomAttributeViewModel {
+export class Outclick implements ICustomAttributeViewModel {
+    @bindable({ primary: true }) readonly fn = (event?) => ``;
+
     constructor(@INode readonly element: HTMLElement) {
 
     }
@@ -17,7 +19,7 @@ export class AureliaOutclickCustomAttribute implements ICustomAttributeViewModel
     handleClick = event => {
         // Click is outside of element
         if (!this.element.contains(event.target)) {
-            this.element.dispatchEvent(new CustomEvent('outclick', { bubbles: true, cancelable: true }));
+            this.fn(event);
         }
     }
 }

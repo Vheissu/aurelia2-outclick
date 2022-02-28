@@ -1,4 +1,4 @@
-import { AureliaOutclickCustomAttribute } from '../src/aurelia-outclick';
+import { Outclick } from '../src/aurelia-outclick';
 import { BrowserPlatform } from '@aurelia/platform-browser';
 import { createFixture, setPlatform } from '@aurelia/testing';
 
@@ -11,23 +11,23 @@ describe('Aurelia Outclick', () => {
         const { appHost, startPromise, tearDown, testHost, component, ctx } = createFixture(
           `<template>
             <div id="container">
-                <button id="button" outclick outclick.delegate="clickOutside($event)">Click Me</button>
+                <button id="button" outclick.bind="clickOutside">Click Me</button>
             </div>
           </template>`,
           class App {
               clickOutside(event) {
-                  return true;
+                return true;
               }
           },
-          [ AureliaOutclickCustomAttribute ]
+          [ Outclick ]
         );
   
         await startPromise;
 
+        jest.spyOn(component, 'clickOutside');
+
         const container = testHost.querySelector('#container') as HTMLDivElement;
         const button = container.querySelector('#button') as HTMLButtonElement;
-
-        jest.spyOn(component, 'clickOutside');
 
         container.click();
 
@@ -40,7 +40,7 @@ describe('Aurelia Outclick', () => {
         const { appHost, startPromise, tearDown, testHost, component, ctx } = createFixture(
           `<template>
             <div id="container">
-                <button id="button" outclick outclick.delegate="clickOutside($event)">Click Me</button>
+                <button id="button" outclick.bind="clickOutside">Click Me</button>
             </div>
           </template>`,
           class App {
@@ -48,7 +48,7 @@ describe('Aurelia Outclick', () => {
                   return true;
               }
           },
-          [ AureliaOutclickCustomAttribute ]
+          [ Outclick ]
         );
   
         await startPromise;
